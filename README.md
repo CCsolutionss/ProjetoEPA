@@ -1,7 +1,6 @@
 
-  # Projeto EPA
 
-  This is a code bundle for Projeto EPA. The original project is available at https://www.figma.com/design/XuTnFMuI18uLMs84CEPSun/Projeto-EPA.
+
 
   ## Running the code
 
