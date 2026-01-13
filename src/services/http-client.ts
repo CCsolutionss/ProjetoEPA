@@ -37,7 +37,29 @@ export class HttpClient {
    * Obtém o token de autenticação do storage
    */
   private getAuthToken(): string | null {
-    return localStorage.getItem(TOKEN_STORAGE_KEY) || sessionStorage.getItem(TOKEN_STORAGE_KEY);
+    // Compatível com as duas chaves de token:
+    // - TOKEN_STORAGE_KEY (services/config.ts)
+    // - 'token' (AuthContext)
+    return (
+      localStorage.getItem(TOKEN_STORAGE_KEY) ||
+      sessionStorage.getItem(TOKEN_STORAGE_KEY) ||
+      localStorage.getItem('token') ||
+      sessionStorage.getItem('token')
+    );
+  }
+
+  /**
+   * Obtém a base selecionada (pós-login) do storage.
+   *
+   * Convenção sugerida para o backend:
+   * - Header: X-Base-Id: <id>
+   * - O backend valida se o usuário tem acesso à base.
+   */
+  private getSelectedBaseId(): string | null {
+    return (
+      localStorage.getItem('epa_selected_base_id') ||
+      sessionStorage.getItem('epa_selected_base_id')
+    );
   }
 
   /**
@@ -53,6 +75,11 @@ export class HttpClient {
       const token = this.getAuthToken();
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const baseId = this.getSelectedBaseId();
+      if (baseId) {
+        headers['X-Base-Id'] = baseId;
       }
     }
 

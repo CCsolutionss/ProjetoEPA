@@ -2,6 +2,7 @@ import { toast } from 'sonner@2.0.3';
 
 // Context
 import { useAuth } from '../context/AuthContext';
+import { useBase } from '../context/BaseContext';
 
 // Components
 import { Header } from '../components/Header';
@@ -9,6 +10,7 @@ import { DashboardCard } from '../components/DashboardCard';
 
 interface HomePageProps {
   onLogout: () => void;
+  onNavigateToSelecionarBase: () => void;
   onNavigateToNovaMedicao: () => void;
   onNavigateToRelatorios: () => void;
   onNavigateToCadastrarBase: () => void;
@@ -37,6 +39,7 @@ interface HomePageProps {
  */
 export default function HomePage({ 
   onLogout, 
+  onNavigateToSelecionarBase,
   onNavigateToNovaMedicao, 
   onNavigateToRelatorios, 
   onNavigateToCadastrarBase, 
@@ -45,6 +48,7 @@ export default function HomePage({
   onNavigateToConfiguracoes 
 }: HomePageProps) {
   const { user, logout } = useAuth();
+  const { selectedBase } = useBase();
 
   const handleLogout = () => {
     try {
@@ -152,6 +156,8 @@ export default function HomePage({
         userName={user.nomeCompleto} 
         userRole={user.cargo}
         onLogout={handleLogout}
+        onChangeBase={onNavigateToSelecionarBase}
+        baseName={selectedBase?.nome}
       />
 
       {/* Main Content */}

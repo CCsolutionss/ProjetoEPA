@@ -4,6 +4,7 @@ import { toast } from 'sonner@2.0.3';
 
 // Context
 import { useAuth } from '../context/AuthContext';
+import { useBase } from '../context/BaseContext';
 
 // Components
 import { Button } from '../components/ui/button';
@@ -73,6 +74,7 @@ const mockBases = [
  */
 export default function NovaMedicaoPage({ onVoltar }: NovaMedicaoPageProps) {
   const { user } = useAuth();
+  const { selectedBase } = useBase();
   
   // Form state
   const [baseId, setBaseId] = useState<string>('');
@@ -92,6 +94,15 @@ export default function NovaMedicaoPage({ onVoltar }: NovaMedicaoPageProps) {
 
     return () => clearInterval(interval);
   }, []);
+
+  /**
+   * Preenche a base a partir da seleção global (tela pós-login)
+   */
+  useEffect(() => {
+    if (selectedBase?.id) {
+      setBaseId(selectedBase.id);
+    }
+  }, [selectedBase?.id]);
 
   /**
    * Handle sample type change
@@ -473,6 +484,7 @@ export default function NovaMedicaoPage({ onVoltar }: NovaMedicaoPageProps) {
                     <SelectTrigger 
                       id="base-select" 
                       className="w-full border-0 bg-transparent focus:ring-0 focus:ring-offset-0"
+                      disabled={!!selectedBase?.id}
                     >
                       <SelectValue placeholder="Selecione a base" />
                     </SelectTrigger>

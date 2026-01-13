@@ -1,4 +1,4 @@
-import { Bell, LogOut } from 'lucide-react';
+import { Bell, LogOut, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
 import epaLogo from '../assets/epa-logo.png';
 
@@ -6,13 +6,11 @@ interface HeaderProps {
   userName: string;
   userRole: string;
   onLogout: () => void;
+  onChangeBase?: () => void;
+  baseName?: string;
 }
 
-export function Header({ userName, userRole, onLogout }: HeaderProps) {
-  // TODO: API - Buscar notificações não lidas
-  // Endpoint: GET /api/notifications/unread
-  // Headers: { Authorization: `Bearer ${token}` }
-  // Response: { count: number, notifications: Notification[] }
+export function Header({ userName, userRole, onLogout, onChangeBase, baseName }: HeaderProps) {
   const unreadNotifications = 0;
 
   return (
@@ -20,7 +18,7 @@ export function Header({ userName, userRole, onLogout }: HeaderProps) {
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo e Título */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <img 
+          <img
             src={epaLogo}
             alt="Grupo EPA Logo"
             className="h-8 sm:h-10 md:h-12 w-auto"
@@ -31,15 +29,29 @@ export function Header({ userName, userRole, onLogout }: HeaderProps) {
           </div>
         </div>
 
-        {/* Notificações e Usuário */}
+        {/* Ações (base + notificações + user + sair) */}
         <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
+          {/* ✅ Botão de trocar/selecionar base (sempre visível) */}
+          {onChangeBase && (
+            <button
+              type="button"
+              onClick={onChangeBase}
+              className="p-2 hover:bg-[#EDFEE8] rounded-lg transition-colors border-2 border-[#000000] bg-white flex items-center gap-2"
+              aria-label="Trocar base"
+              title="Trocar base"
+            >
+              <MapPin className="w-4 h-4 text-[#000000]" />
+              {/* Mantém compacto no desktop e não quebra layout no mobile */}
+              <span className="hidden sm:inline text-sm text-[#000000] max-w-[180px] truncate">
+                {baseName ? baseName : 'Selecionar base'}
+              </span>
+            </button>
+          )}
+
           {/* Notificações */}
-          <button 
+          <button
             className="relative p-2 hover:bg-[#EDFEE8] rounded-lg transition-colors"
             aria-label="Notificações"
-            // TODO: API - Ao clicar, abrir modal com lista de notificações
-            // Endpoint: GET /api/notifications
-            // Headers: { Authorization: `Bearer ${token}` }
           >
             <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-[#000000]" />
             {unreadNotifications > 0 && (
