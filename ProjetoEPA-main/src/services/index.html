@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação EPA - Integração de Microserviços</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #EDFEE8 0%, #ffffff 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #000000;
+        }
+
+        h1 {
+            color: #000000;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #00920C;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #00DC30;
+            color: #000000;
+            border-radius: 2rem;
+            font-weight: 600;
+            border: 2px solid #000000;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #000000;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 146, 12, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card h2 {
+            color: #000000;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .card li {
+            color: #333;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card li:last-child {
+            border-bottom: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #00DC30;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            border: 2px solid #000000;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn:hover {
+            background: #00920C;
+            color: white;
+        }
+
+        .services-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #000000;
+            margin-bottom: 2rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            padding: 1.5rem;
+            background: #EDFEE8;
+            border-radius: 0.5rem;
+            border: 2px solid #00920C;
+            text-align: center;
+        }
+
+        .service-card h3 {
+            color: #00920C;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-port {
+            color: #666;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00920C;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #666;
+            background: white;
+            border-radius: 1rem;
+            border: 2px solid #000000;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-success {
+            background: #00DC30;
+            color: #000000;
+        }
+
+        .badge-warning {
+            background: #ffc107;
+            color: #000000;
+        }
+
+        .badge-info {
+            background: #17a2b8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏗️ Sistema EPA</h1>
+            <p class="subtitle">Documentação Completa de Integração de Microserviços</p>
+            <div class="status">✅ Frontend 100% Completo | ⏳ Backend Aguardando Implementação</div>
+        </header>
+
+        <div class="services-section">
+            <h2 style="color: #000000; margin-bottom: 1rem;">🚀 Microserviços</h2>
+            <p>Arquitetura distribuída com 5 serviços independentes</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Auth Service</h3>
+                    <p class="service-port">Port: 3001</p>
+                    <small>Autenticação</small>
+                </div>
+                <div class="service-card">
+                    <h3>User Service</h3>
+                    <p class="service-port">Port: 3002</p>
+                    <small>Usuários</small>
+                </div>
+                <div class="service-card">
+                    <h3>Medição Service</h3>
+                    <p class="service-port">Port: 3003</p>
+                    <small>Medições</small>
+                </div>
+                <div class="service-card">
+                    <h3>Notification</h3>
+                    <p class="service-port">Port: 3004</p>
+                    <small>Notificações</small>
+                </div>
+                <div class="service-card">
+                    <h3>Settings</h3>
+                    <p class="service-port">Port: 3005</p>
+                    <small>Configurações</small>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value">58</div>
+                    <div class="metric-label">Endpoints</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">5</div>
+                    <div class="metric-label">Microserviços</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">Tabelas DB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">12</div>
+                    <div class="metric-label">Páginas</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #000000; margin-bottom: 1.5rem; text-align: center;">📚 Documentação</h2>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📖</span>
+                    <h2>README</h2>
+                </div>
+                <p>Visão geral da estrutura de serviços e como usar no projeto.</p>
+                <ul>
+                    <li><span class="badge badge-success">Completo</span> Estrutura de pastas</li>
+                    <li><span class="badge badge-success">Completo</span> Como importar serviços</li>
+                    <li><span class="badge badge-success">Completo</span> Padrões de código</li>
+                </ul>
+                <a href="README.md" class="btn">Ver Documento</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎯</span>
+                    <h2>Executive Summary</h2>
+                </div>
+                <p>Resumo executivo para C-Level e Product Owners.</p>
+                <ul>
+                    <li><span class="badge badge-info">Negócio</span> Status do projeto</li>
+                    <li><span class="badge badge-info">Negócio</span> Roadmap</li>
+                    <li><span class="badge badge-info">Negócio</span> Métricas</li>
+                </ul>
+                <a href="EXECUTIVE_SUMMARY.md" class="btn">Ver Documento</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔧</span>
+                    <h2>Backend Integration</h2>
+                </div>
+                <p>Guia completo para desenvolvedores backend.</p>
+                <ul>
+                    <li><span class="badge badge-warning">Backend</span> Especificações de endpoints</li>
+                    <li><span class="badge badge-warning">Backend</span> Exemplos de código</li>
+                    <li><span class="badge badge-warning">Backend</span> Schema do banco</li>
+                </ul>
+                <a href="BACKEND_INTEGRATION.md" class="btn">Ver Documento</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏛️</span>
+                    <h2>Architecture</h2>
+                </div>
+                <p>Diagramas de arquitetura e fluxos do sistema.</p>
+                <ul>
+                    <li><span class="badge badge-info">Arquitetura</span> Diagrama geral</li>
+                    <li><span class="badge badge-info">Arquitetura</span> Fluxos de autenticação</li>
+                    <li><span class="badge badge-info">Arquitetura</span> Comunicação entre serviços</li>
+                </ul>
+                <a href="ARCHITECTURE.md" class="btn">Ver Documento</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💻</span>
+                    <h2>Usage Examples</h2>
+                </div>
+                <p>Exemplos práticos de código para o frontend.</p>
+                <ul>
+                    <li><span class="badge badge-success">Frontend</span> Como fazer login</li>
+                    <li><span class="badge badge-success">Frontend</span> Como criar medições</li>
+                    <li><span class="badge badge-success">Frontend</span> Tratamento de erros</li>
+                </ul>
+                <a href="USAGE_EXAMPLES.md" class="btn">Ver Documento</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">✅</span>
+                    <h2>Integration Checklist</h2>
+                </div>
+                <p>Checklist completo para acompanhar a implementação.</p>
+                <ul>
+                    <li><span class="badge badge-warning">QA</span> 58 endpoints para implementar</li>
+                    <li><span class="badge badge-warning">QA</span> Critérios de aceitação</li>
+                    <li><span class="badge badge-warning">QA</span> Testes necessários</li>
+                </ul>
+                <a href="INTEGRATION_CHECKLIST.md" class="btn">Ver Documento</a>
+            </div>
+        </div>
+
+        <div class="services-section">
+            <h2 style="color: #000000; margin-bottom: 1rem;">📁 Arquivos de Serviço</h2>
+            <p>Cada serviço possui seu próprio arquivo TypeScript com implementação completa e documentação detalhada com TODOs para integração backend.</p>
+            <div class="grid" style="margin-top: 1.5rem;">
+                <div class="card">
+                    <h3 style="color: #00920C;">config.ts</h3>
+                    <p>URLs dos microserviços e configurações globais</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">http-client.ts</h3>
+                    <p>Cliente HTTP genérico com timeout e auth automática</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">auth.service.ts</h3>
+                    <p>Autenticação, login, registro, recuperação de senha</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">user.service.ts</h3>
+                    <p>CRUD de usuários, permissões, gestão de perfis</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">medicao.service.ts</h3>
+                    <p>Medições, bases, relatórios, exportação</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">notification.service.ts</h3>
+                    <p>Notificações REST + WebSocket em tempo real</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">settings.service.ts</h3>
+                    <p>Configurações, logs, backup/restore</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: #00920C;">index.ts</h3>
+                    <p>Exportações centralizadas de todos os serviços</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Projeto EPA - Sistema de Gestão de Medições</strong></p>
+            <p style="margin-top: 0.5rem;">Desenvolvido com React + TypeScript + Tailwind CSS</p>
+            <p style="margin-top: 0.5rem; color: #00920C;">
+                ✅ Frontend: 100% Completo | ⏳ Backend: Aguardando Implementação
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Janeiro 2025 | Versão 1.0
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
